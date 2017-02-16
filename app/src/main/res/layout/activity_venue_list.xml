@@ -9,4 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ashl7developer.cityexplore.VenueListActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/popular_venues_text"/>
+
+    <fragment
+        android:id="@+id/select_venue_fragment"
+        android:name="com.ashl7developer.cityexplore.VenueListFragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        tools:layout="@layout/fragment_venue_list" />
+
 </RelativeLayout>

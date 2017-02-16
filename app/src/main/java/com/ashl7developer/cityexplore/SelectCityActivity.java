@@ -9,6 +9,9 @@ import android.os.Bundle;
  */
 public class SelectCityActivity extends AppCompatActivity {
 
+    public static final String CLIENT_ID = "1T44UBTLMOEI01RHYUZIOPHBIYMZTWCHVPCML1IPETOM5Y1E";
+    public static final String CLIENT_SECRET = "5LVUUOLMPN04VSBE54EN0OUZOEDAFMXAAAKXN1KN52MWUAOC";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

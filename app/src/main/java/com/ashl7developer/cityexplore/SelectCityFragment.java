@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 /**
@@ -41,7 +42,9 @@ public class SelectCityFragment extends Fragment {
                                     View itemView,
                                     int position,
                                     long id) {
+                String cityName = ((TextView)(itemView.findViewById(android.R.id.text1))).getText().toString();
                 Intent intent = new Intent(getActivity(), VenueListActivity.class);
+                intent.putExtra("city", cityName);
                 startActivity(intent);
             }
         };
