@@ -48,14 +48,12 @@ public class VenueListFragment extends Fragment{
         super.onStart();
         Intent intent = getActivity().getIntent();
         String cityName = intent.getStringExtra("city");
-        View view = getView();
-        venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
 
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
 
-        Call<CityResponse> call = apiService.getVenues("Los Angeles, CA",
+        Call<CityResponse> call = apiService.getVenues(cityName,
                 "50",
                 FoursquareClient.CLIENT_ID,
                 FoursquareClient.CLIENT_SECRET,
@@ -64,30 +62,54 @@ public class VenueListFragment extends Fragment{
         call.enqueue(new Callback<CityResponse>() {
             @Override
             public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
-                Log.d(TAG, "CODE: " + response.code());
-                CityResponse cityResponse = response.body();
-                model.Response modelResponse = cityResponse.getResponse();
-                List<Group> groups = modelResponse.getGroups();
-                List<Item> items = groups.get(0).getItems();
-                Venue venue = items.get(0).getVenue();
-                Log.d(TAG, "VENUE NAME: " + venue.getName());
+                if(response.isSuccessful()) {
+                    CityResponse cityResponse = response.body();
+                    model.Response modelResponse = cityResponse.getResponse();
+                    List<Group> groups = modelResponse.getGroups();
+                    List<Item> items = groups.get(0).getItems();
+                    Venue venue = items.get(0).getVenue();
+                    Log.d(TAG, "API call was not successful. " + venue.getName());
+                    showVenuesOnListview(items);
+                }
+                else {
+                    Log.d(TAG, "API call was not successful. Error: " + response.errorBody());
+                }
             }
 
             @Override
-            public void onFailure(Call<CityResponse>call, Throwable t) {
+            public void onFailure(Call<CityResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
             }
         });
 
+    }
 
-        String[] venues = new String[1];
-        venues[0] = cityName;
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
+    /**
+     * Populates the listview with the data received from foursquare client api call
+     *
+     * @param  items  The list of items which contains venues
+     * @return      void
+     */
+    private void showVenuesOnListview(List<Item> items) {
+        View view = getView();
+        venueListView = (ListView) view.findViewById(R.id.venue_listview);
+
+        int numRecords = items.size();
+        Venue[] venues = new Venue[numRecords];
+        String[] ven = new String[numRecords];
+
+        for(int i = 0; i < numRecords; i++) {
+            venues[i] = items.get(i).getVenue();
+            ven[i] =  items.get(i).getVenue().getName();
+
+        }
+
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
-                venues);
+                ven);
 
         venueListView.setAdapter(listAdapter);
     }
