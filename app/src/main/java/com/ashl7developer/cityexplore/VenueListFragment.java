@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.CityResponse;
@@ -94,25 +98,35 @@ public class VenueListFragment extends Fragment{
      */
     private void showVenuesOnListview(List<Item> items) {
         View view = getView();
-        venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
-        int numRecords = items.size();
-        Venue[] venues = new Venue[numRecords];
-        String[] ven = new String[numRecords];
-
-        for(int i = 0; i < numRecords; i++) {
-            venues[i] = items.get(i).getVenue();
-            ven[i] =  items.get(i).getVenue().getName();
+        if(view != null) {
 
         }
+        venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                ven);
+        List<Venue> venueList = new ArrayList<>();
 
-        venueListView.setAdapter(listAdapter);
+        for(int i = 0; i < items.size(); i++) {
+            venueList.add(items.get(i).getVenue());
+        }
+
+
+        VenueListAdapter venueListAdapter =
+                new VenueListAdapter(getActivity(), R.layout.item_venue_list, venueList);
+        venueListView.setAdapter(venueListAdapter);
+
+        // Setting up listener for items that are clicked on the list
+        venueListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
