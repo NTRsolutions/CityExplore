@@ -49,10 +49,10 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
         sb.delete(sb.length()-2, sb.length());
         TextView categoryTextView = (TextView) convertView.findViewById(R.id.category_textview);
         categoryTextView.setText(sb.toString());
-        /*
+
         ImageView thumbnailImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
         thumbnailImageView.setImageResource(R.drawable.unknown_image);
-*/
+
         return convertView;         // Return the completed view to render on screen
     }
 
