@@ -39,20 +39,20 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.name_textview);
         nameTextView.setText(venue.getName().toString());
-        /*
+
         TextView locationTextView = (TextView) convertView.findViewById(R.id.location_textview);
         locationTextView.setText(venue.getLocation().getAddress());
 
         List<Category> categories = venue.getCategories();
         StringBuffer sb = new StringBuffer();
         for(Category category: categories) sb.append(category.getName() + ", ");
-        sb.deleteCharAt(sb.length()-1);
+        sb.delete(sb.length()-2, sb.length());
         TextView categoryTextView = (TextView) convertView.findViewById(R.id.category_textview);
         categoryTextView.setText(sb.toString());
-
+        /*
         ImageView thumbnailImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
         thumbnailImageView.setImageResource(R.drawable.unknown_image);
-        */
+*/
         return convertView;         // Return the completed view to render on screen
     }
 
