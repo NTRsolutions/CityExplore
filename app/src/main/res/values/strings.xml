@@ -21,7 +21,8 @@
     <string name="category_outdoors_text">Outdoors</string>
     <string name="category_arts_text">Arts</string>
 
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

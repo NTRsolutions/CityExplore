@@ -12,6 +12,7 @@ public class FoursquareClient {
     public static final String CLIENT_ID = "1T44UBTLMOEI01RHYUZIOPHBIYMZTWCHVPCML1IPETOM5Y1E";
     public static final String CLIENT_SECRET = "5LVUUOLMPN04VSBE54EN0OUZOEDAFMXAAAKXN1KN52MWUAOC";
     public static final String BASE_URL = "https://api.foursquare.com/v2/";
+    public static final String API_DATE = "20170115";
     private static Retrofit retrofit = null;
 
 

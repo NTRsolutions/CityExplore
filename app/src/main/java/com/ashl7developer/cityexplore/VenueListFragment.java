@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 import model.CityResponse;
@@ -29,6 +30,8 @@ public class VenueListFragment extends Fragment{
 
     private static final String TAG = SelectCityFragment.class.getName();
     private ListView venueListView;
+    private String cityName;
+    List<Venue> venueList;
 
 
     public VenueListFragment() {
@@ -48,7 +51,7 @@ public class VenueListFragment extends Fragment{
     public void onStart() {
         super.onStart();
         Intent intent = getActivity().getIntent();
-        String cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
+        cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
 
         getVenuesFromFoursquare(cityName, null, 50, "20170115");
     }
@@ -68,7 +71,8 @@ public class VenueListFragment extends Fragment{
      * @param  category  The target category
      * @param  limit  Max number of returned result
      * @param  date  The date of the api
-     * @return List<Item> List of the venues
+     * @return List<Venue> List of the venues
+     * TODO: make it return a list<venue>
      */
     private void getVenuesFromFoursquare(String city, String category, int limit, String date) {
 
@@ -101,6 +105,7 @@ public class VenueListFragment extends Fragment{
                     Log.d(TAG, "API call was not successful. ");
                     List<Item> items = response.body().getResponse().getGroups().get(0).getItems();
                     venues = Item.ItemsToVenues(items);
+                    venueList = venues;
                 }
                 else {
                     Log.d(TAG, "API call was not successful. Error: " + response.errorBody());
@@ -133,7 +138,7 @@ public class VenueListFragment extends Fragment{
         }
 
         // connecting the adapter to listview
-        VenueListAdapter venueListAdapter =
+        final VenueListAdapter venueListAdapter =
                 new VenueListAdapter(getActivity(), R.layout.item_venue_list, venues);
         venueListView.setAdapter(venueListAdapter);
 
@@ -142,11 +147,63 @@ public class VenueListFragment extends Fragment{
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-
+                        if(position != 0 && position%10 == 0) { //if clicked on every 10th items
+                           onCategoryRowClick(view);
+                        }
+                        else {
+                            Venue venue = venueList.get(position);
+                            onVenueRowClick(venue);
+                        }
                     }
                 });
+    }
+
+
+    private void onVenueRowClick(Venue venue) {
+        String id = venue.getId();
+        String name = venue.getName();
+        Intent intent = new Intent(getActivity(), VenuePhotoActivity.class);
+        intent.putExtra("name", name);
+        startActivity(intent);
+    }
+
+
+    /**
+     * What to do when the item_categories_list.xml is clicked on listview
+     *
+     * @param  view  A reference to the item(row) View clicked
+     * @return  void
+     */
+    private void onCategoryRowClick(View view) {
+        final TextView foodTextView = (TextView) view.findViewById(R.id.food_textview);
+        foodTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getVenuesFromFoursquare(cityName,
+                        foodTextView.getText().toString(),
+                        50, FoursquareClient.API_DATE);
+            }
+        });
+
+        final TextView outdoorsTextView = (TextView) view.findViewById(R.id.outdoors_textview);
+        outdoorsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getVenuesFromFoursquare(cityName,
+                        outdoorsTextView.getText().toString(),
+                        50, FoursquareClient.API_DATE);
+            }
+        });
+
+        final TextView artsTextView = (TextView) view.findViewById(R.id.arts_textview);
+        artsTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getVenuesFromFoursquare(cityName,
+                        artsTextView.getText().toString(),
+                        50, FoursquareClient.API_DATE);
+            }
+        });
     }
 
 }
