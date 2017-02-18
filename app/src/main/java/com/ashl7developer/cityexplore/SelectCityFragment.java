@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Fragment to show a list of venues for a certain city
+ * Fragment to show a list of cities to select from
  */
 public class SelectCityFragment extends Fragment {
 
+    private static final String TAG = SelectCityFragment.class.getName();
+    public static final String EXTRA_CITY_NAME = "0";
     private ListView cityListView;
+
 
     public SelectCityFragment() {
         // Required empty public constructor
@@ -44,7 +47,7 @@ public class SelectCityFragment extends Fragment {
                                     long id) {
                 String cityName = ((TextView)(itemView.findViewById(android.R.id.text1))).getText().toString();
                 Intent intent = new Intent(getActivity(), VenueListActivity.class);
-                intent.putExtra("city", cityName);
+                intent.putExtra(EXTRA_CITY_NAME, cityName);
                 startActivity(intent);
             }
         };
@@ -52,6 +55,5 @@ public class SelectCityFragment extends Fragment {
         View view = getView();
         cityListView = (ListView) view.findViewById(R.id.city_listview);
         cityListView.setOnItemClickListener(itemClickListener);
-
     }
 }

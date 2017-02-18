@@ -30,11 +30,22 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
     // This method indicates how the listView should look
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // edge case
+        if(venueList == null || venueList.isEmpty()) {
+            // TODO what to show when there is no element
+            return convertView;
+        }
+
         Venue venue = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(
                     R.layout.item_venue_list, parent, false);
+        }
+
+        // if we are at the
+        if(position%50 == 1 && position != 1){
+
         }
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.name_textview);
