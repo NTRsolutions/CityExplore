@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d6dbec"
+    android:minHeight="40dp">
+
+    <TextView
+        android:id="@+id/beach_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="Beach"
+        android:textSize="25dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal" />
+    <TextView
+        android:id="@+id/park_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Park"
+        android:textSize="25dp"
+        android:layout_weight="1.26"
+        android:gravity="center_horizontal" />
+    <TextView
+        android:id="@+id/museum_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Museum"
+        android:textSize="25dp"
+        android:layout_weight="0.80"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal" />
+
+</LinearLayout>
