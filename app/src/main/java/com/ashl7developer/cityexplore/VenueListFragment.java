@@ -72,14 +72,25 @@ public class VenueListFragment extends Fragment{
      */
     private void getVenuesFromFoursquare(String city, String category, int limit, String date) {
 
+        Call<CityResponse> call;
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
 
-        Call<CityResponse> call = apiService.getVenues(FoursquareClient.CLIENT_ID,
-                FoursquareClient.CLIENT_SECRET,
-                city,
-                Integer.toString(limit),
-                date);
+        if(category == null) {
+            call = apiService.getVenues(FoursquareClient.CLIENT_ID,
+                    FoursquareClient.CLIENT_SECRET,
+                    city,
+                    Integer.toString(limit),
+                    date);
+        }
+        else {
+            call = apiService.getVenuesWithCategory(FoursquareClient.CLIENT_ID,
+                    FoursquareClient.CLIENT_SECRET,
+                    city,
+                    category,
+                    Integer.toString(limit),
+                    date);
+        }
 
         call.enqueue(new Callback<CityResponse>() {
             private List<Venue> venues = null;

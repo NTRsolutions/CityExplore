@@ -25,7 +25,7 @@ public interface FoursquareInterface {
     Call<CityResponse> getVenuesWithCategory(@Query("client_id") String clinet_id,
                                              @Query("client_secret") String client_secret,
                                              @Query("near") String city,
-                                             @Query("near") String category,
+                                             @Query("section") String category,
                                              @Query("limit") String limit,
                                              @Query("v") String date);
 }
