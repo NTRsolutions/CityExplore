@@ -77,9 +77,13 @@ public class VenueListFragment extends Fragment{
      */
     private void getVenuesFromFoursquare(String city, String category, int limit, String date) {
 
+        Log.d(TAG, "In getVenuesFromFoursquare: got here");
+
         Call<CityResponse> call;
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
+
+        Log.d(TAG, "In getVenuesFromFoursquare: making call");
 
         if(category == null) {
             call = apiService.getVenues(FoursquareClient.CLIENT_ID,
@@ -103,7 +107,7 @@ public class VenueListFragment extends Fragment{
             @Override
             public void onResponse(Call<CityResponse> call, Response<CityResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d(TAG, "API call was not successful. ");
+                    Log.d(TAG, "API call was successful. ");
                     List<Item> items = response.body().getResponse().getGroups().get(0).getItems();
                     venues = Item.ItemsToVenues(items);
                 }

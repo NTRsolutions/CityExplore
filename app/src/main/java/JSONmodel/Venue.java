@@ -27,7 +27,7 @@ public class Venue {
     private String url;
 
     @SerializedName("photos")
-    private Photos photos;
+    private Photos photos = null;
 
     private boolean bookmarked;
 

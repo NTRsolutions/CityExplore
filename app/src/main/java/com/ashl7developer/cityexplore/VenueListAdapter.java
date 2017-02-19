@@ -1,14 +1,22 @@
 package com.ashl7developer.cityexplore;
 
 import android.content.Context;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import JSONmodel.Category;
+import JSONmodel.PhotoGroup;
+import JSONmodel.PhotoItem;
+import JSONmodel.Photos;
 import JSONmodel.Venue;
 
 /**
@@ -17,15 +25,18 @@ import JSONmodel.Venue;
  */
 public class VenueListAdapter extends ArrayAdapter<Venue> {
 
+    private static final String TAG = SelectCityFragment.class.getName();
     List<Venue> venueList;
     // row layout types
     private static final int REGULAR_ITEM_TYPE = 0;
     private static final int CATEGORY_ITEM_TYPE = 1;
+    private Context context;
 
 
     public VenueListAdapter(Context context, int resource, List<Venue> objects) {
         super(context, resource, objects);
         venueList = objects;
+        this.context = context;
     }
 
 
@@ -72,10 +83,26 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
                     sb.delete(sb.length()-2, sb.length());
                     TextView categoryTextView = (TextView) convertView.findViewById(R.id.category_textview);
                     categoryTextView.setText(sb.toString());
+                    /*
+                    Photos photos = venue.getPhotos();
+                    List<PhotoGroup> photoGroups = photos.getGroups();
+                    PhotoGroup photoGroup = photoGroups.get(0);
+                    List<PhotoItem> photoItems = photoGroup.getItems();
+                    PhotoItem photoItem = photoItems.get(0);
+                    String url = photoItem.getURL();
+                    Log.d(TAG, "Photo URL: " + url);
 
+
+
+                    Picasso.with(this.context)
+                            .load(url)
+                            .placeholder(R.drawable.unknown_image) // what to show if no img receieved
+                            .error(R.drawable.error_img)           // what to show if error occured
+                            .resize(50,50)
+                            .into(thumbnailImageView);
+                    */
                     ImageView thumbnailImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
                     thumbnailImageView.setImageResource(R.drawable.unknown_image);
-
                     break;
                 case CATEGORY_ITEM_TYPE:
                     convertView = LayoutInflater.from(getContext()).inflate(
