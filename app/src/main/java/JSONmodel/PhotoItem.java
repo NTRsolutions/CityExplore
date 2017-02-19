@@ -1,5 +1,7 @@
 package JSONmodel;
 
+import android.content.res.Resources;
+
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
 /**
@@ -16,9 +18,18 @@ public class PhotoItem {
     @SerializedName("suffix")
     private String suffix;
 
+    // how to request images: https://developer.foursquare.com/docs/responses/photo.html
+    public String getURLforThumbnail() {
+        return prefix + "width100" + suffix;
+    }
 
-    public String getURL() {
-        return prefix + suffix;
+    public String getURLforGrid() {
+        return prefix + "width300" + suffix;
+    }
+
+    public String getURLforOriginal() {
+        //int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        return prefix + "original" + suffix;
     }
 
     public String getId() {

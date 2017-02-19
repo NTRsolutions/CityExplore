@@ -10,8 +10,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import JSONmodel.CityResponse;
+import JSONmodel.PhotoGroup;
+import JSONmodel.PhotoItem;
+import JSONmodel.Photos;
 import JSONmodel.Venue;
 import JSONmodel.Item;
 import foursquareREST.FoursquareClient;
@@ -27,7 +34,7 @@ import retrofit2.Response;
  */
 public class VenueListFragment extends Fragment{
 
-    private static final String TAG = SelectCityFragment.class.getName();
+    private static final String TAG = VenueListFragment.class.getName();
     private ListView venueListView;
     private String cityName;
 
@@ -40,21 +47,14 @@ public class VenueListFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_venue_list, container, false);
-
-        Intent intent = getActivity().getIntent();
-        cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
-
-        getVenuesFromFoursquare(cityName, null, 50, FoursquareClient.API_DATE);
+            Intent intent = getActivity().getIntent();
+            cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
+            getVenuesFromFoursquare(cityName, null, 50, FoursquareClient.API_DATE, 1);
 
         return view;
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
 
@@ -72,24 +72,23 @@ public class VenueListFragment extends Fragment{
      * @param  category  The target category
      * @param  limit  Max number of returned result
      * @param  date  The date of the api
+     * @param  numPhotos  Number of photos to return
      * @return List<Venue> List of the venues
      * TODO: return a list<venue>
      */
-    private void getVenuesFromFoursquare(String city, String category, int limit, String date) {
-
-        Log.d(TAG, "In getVenuesFromFoursquare: got here");
+    private void getVenuesFromFoursquare(String city, String category, int limit,
+                                         String date, int numPhotos) {
 
         Call<CityResponse> call;
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
-
-        Log.d(TAG, "In getVenuesFromFoursquare: making call");
 
         if(category == null) {
             call = apiService.getVenues(FoursquareClient.CLIENT_ID,
                     FoursquareClient.CLIENT_SECRET,
                     city,
                     Integer.toString(limit),
+                    Integer.toString(numPhotos),
                     date);
         }
         else {
@@ -98,6 +97,7 @@ public class VenueListFragment extends Fragment{
                     city,
                     category,
                     Integer.toString(limit),
+                    Integer.toString(numPhotos),
                     date);
         }
 
@@ -134,11 +134,11 @@ public class VenueListFragment extends Fragment{
      * @return  void
      */
     private void showVenuesOnListview(final List<Venue> venues) {
+        
+        if(venues == null || venues.isEmpty()) return;
         // Get the listview
         View view = getView();
-        if(view != null) {
-            venueListView = (ListView) view.findViewById(R.id.venue_listview);
-        }
+        if(view != null)  venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
         // connecting the adapter to listview
         final VenueListAdapter venueListAdapter =
@@ -169,8 +169,12 @@ public class VenueListFragment extends Fragment{
      * @return  void
      */
     private void onVenueRowClick(Venue venue) {
+        if(venue == null) return;
+
         String id = venue.getId();
         String name = venue.getName();
+        Photos photos = venue.getPhotos();
+
         Intent intent = new Intent(getActivity(), VenuePhotoActivity.class);
         intent.putExtra("name", name);
         startActivity(intent);
@@ -179,18 +183,20 @@ public class VenueListFragment extends Fragment{
 
     /**
      * What to do when the item_categories_list.xml is clicked on listview
+     * get which category is clicked, then call api with the specified category
      *
      * @param  view  A reference to the item(row) View clicked
      * @return  void
      */
     private void onCategoryRowClick(View view) {
+
         final TextView foodTextView = (TextView) view.findViewById(R.id.food_textview);
         foodTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         foodTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE);
+                        50, FoursquareClient.API_DATE, 1);
             }
         });
 
@@ -200,7 +206,7 @@ public class VenueListFragment extends Fragment{
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         outdoorsTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE);
+                        50, FoursquareClient.API_DATE, 1);
             }
         });
 
@@ -210,7 +216,7 @@ public class VenueListFragment extends Fragment{
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         artsTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE);
+                        50, FoursquareClient.API_DATE, 1);
             }
         });
     }

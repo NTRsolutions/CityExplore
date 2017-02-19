@@ -13,6 +13,7 @@ import android.view.ViewGroup;
  */
 public class VenuePhotoFragment extends Fragment {
 
+    public static final String VENUE_ID = "0";
 
     public VenuePhotoFragment() {
         // Required empty public constructor

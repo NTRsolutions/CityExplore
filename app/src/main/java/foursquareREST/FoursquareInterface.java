@@ -17,6 +17,7 @@ public interface FoursquareInterface {
                                  @Query("client_secret") String client_secret,
                                  @Query("near") String city,
                                  @Query("limit") String limit,
+                                 @Query("venuePhotos") String count,
                                  @Query("v") String date);
 
     // Get venues given the category
@@ -26,5 +27,6 @@ public interface FoursquareInterface {
                                              @Query("near") String city,
                                              @Query("section") String category,
                                              @Query("limit") String limit,
+                                             @Query("venuePhotos") String count,
                                              @Query("v") String date);
 }
