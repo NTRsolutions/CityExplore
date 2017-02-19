@@ -1,4 +1,4 @@
-package rest;
+package foursquareREST;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

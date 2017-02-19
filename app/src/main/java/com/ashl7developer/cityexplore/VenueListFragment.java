@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.List;
-import model.CityResponse;
-import model.Venue;
-import model.Item;
-import rest.FoursquareClient;
-import rest.FoursquareInterface;
+import JSONmodel.CityResponse;
+import JSONmodel.Venue;
+import JSONmodel.Item;
+import foursquareREST.FoursquareClient;
+import foursquareREST.FoursquareInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,7 +30,6 @@ public class VenueListFragment extends Fragment{
     private static final String TAG = SelectCityFragment.class.getName();
     private ListView venueListView;
     private String cityName;
-    List<Venue> venueList;
 
 
     public VenueListFragment() {
@@ -43,17 +41,20 @@ public class VenueListFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_venue_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_venue_list, container, false);
+
+        Intent intent = getActivity().getIntent();
+        cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
+
+        getVenuesFromFoursquare(cityName, null, 50, FoursquareClient.API_DATE);
+
+        return view;
     }
 
 
     @Override
     public void onStart() {
         super.onStart();
-        Intent intent = getActivity().getIntent();
-        cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
-
-        getVenuesFromFoursquare(cityName, null, 50, "20170115");
     }
 
 
@@ -72,7 +73,7 @@ public class VenueListFragment extends Fragment{
      * @param  limit  Max number of returned result
      * @param  date  The date of the api
      * @return List<Venue> List of the venues
-     * TODO: make it return a list<venue>
+     * TODO: return a list<venue>
      */
     private void getVenuesFromFoursquare(String city, String category, int limit, String date) {
 
@@ -105,7 +106,6 @@ public class VenueListFragment extends Fragment{
                     Log.d(TAG, "API call was not successful. ");
                     List<Item> items = response.body().getResponse().getGroups().get(0).getItems();
                     venues = Item.ItemsToVenues(items);
-                    venueList = venues;
                 }
                 else {
                     Log.d(TAG, "API call was not successful. Error: " + response.errorBody());
@@ -129,10 +129,9 @@ public class VenueListFragment extends Fragment{
      * @param  venues  The list of items which contains venues
      * @return  void
      */
-    private void showVenuesOnListview(List<Venue> venues) {
+    private void showVenuesOnListview(final List<Venue> venues) {
         // Get the listview
         View view = getView();
-
         if(view != null) {
             venueListView = (ListView) view.findViewById(R.id.venue_listview);
         }
@@ -151,7 +150,7 @@ public class VenueListFragment extends Fragment{
                            onCategoryRowClick(view);
                         }
                         else {
-                            Venue venue = venueList.get(position);
+                            Venue venue = venues.get(position);
                             onVenueRowClick(venue);
                         }
                     }
@@ -159,6 +158,12 @@ public class VenueListFragment extends Fragment{
     }
 
 
+    /**
+     * What to do when the item_venue_list.xml is clicked on listview
+     *
+     * @param  venue  venue item clicked
+     * @return  void
+     */
     private void onVenueRowClick(Venue venue) {
         String id = venue.getId();
         String name = venue.getName();

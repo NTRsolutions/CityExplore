@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
-import model.Category;
-import model.Venue;
+import JSONmodel.Category;
+import JSONmodel.Venue;
 
 /**
  * Created by ASHL7 on 2/16/2017.
@@ -53,13 +51,15 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
             return convertView;
         }
         int layoutType = getItemViewType(position);
-        Venue venue = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             switch (layoutType) {
                 case REGULAR_ITEM_TYPE:
+                    Venue venue = getItem(position);
+
                     convertView = LayoutInflater.from(getContext()).inflate(
                             R.layout.item_venue_list, parent, false);
+
                     TextView nameTextView = (TextView) convertView.findViewById(R.id.name_textview);
                     nameTextView.setText(venue.getName().toString());
 
@@ -84,7 +84,6 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
             }
 
         }
-
         return convertView;         // Return the completed view to render on screen
     }
 

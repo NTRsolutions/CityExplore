@@ -1,4 +1,4 @@
-package model;
+package JSONmodel;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -26,13 +26,9 @@ public class Venue {
     @SerializedName("url")
     private String url;
 
-    /*
     @SerializedName("photos")
     private Photos photos;
 
-    @SerializedName("featuredPhotos")
-    private FeaturedPhotos featuredPhotos;
-*/
     private boolean bookmarked;
 
 
@@ -75,7 +71,7 @@ public class Venue {
     public void setUrl(String url) {
         this.url = url;
     }
-    /*
+
     public Photos getPhotos() {
         return photos;
     }
@@ -84,14 +80,6 @@ public class Venue {
         this.photos = photos;
     }
 
-    public FeaturedPhotos getFeaturedPhotos() {
-        return featuredPhotos;
-    }
-
-    public void setFeaturedPhotos(FeaturedPhotos featuredPhotos) {
-        this.featuredPhotos = featuredPhotos;
-    }
-    */
     public boolean isBookmarked() {
         return bookmarked;
     }

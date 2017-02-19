@@ -1,4 +1,4 @@
-package model;
+package JSONmodel;
 
 
 import com.google.gson.annotations.SerializedName;
