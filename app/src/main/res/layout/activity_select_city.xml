@@ -10,16 +10,19 @@
     tools:context=".SelectCityActivity">
 
     <TextView
+        android:id="@+id/textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/select_city_text"/>
+        android:text="@string/select_city_text"
+        android:textSize="18dp"
+        android:layout_marginBottom="15dp"/>
 
     <fragment
         android:id="@+id/select_city_fragment"
+        android:layout_below="@+id/textview"
         android:name="com.ashl7developer.cityexplore.SelectCityFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
         tools:layout="@layout/fragment_select_city" />
 
 </RelativeLayout>

@@ -13,13 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import JSONmodel.CityResponse;
-import JSONmodel.Photos;
 import JSONmodel.Venue;
 import JSONmodel.Item;
 import foursquareREST.FoursquareClient;
@@ -88,7 +83,7 @@ public class VenueListFragment extends Fragment{
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
 
-        if(category == null) {
+        if(category == null) {  //if category is not specified
             call = apiService.getVenues(FoursquareClient.CLIENT_ID,
                     FoursquareClient.CLIENT_SECRET,
                     city,
@@ -139,11 +134,12 @@ public class VenueListFragment extends Fragment{
      * @return  void
      */
     private void showVenuesOnListview(final List<Venue> venues) {
-
         if(venues == null || venues.isEmpty()) return;
+
         // Get the listview
         View view = getView();
-        if(view != null)  venueListView = (ListView) view.findViewById(R.id.venue_listview);
+        if(view != null)
+            venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
         // connecting the adapter to listview
         final VenueListAdapter venueListAdapter =
@@ -175,13 +171,9 @@ public class VenueListFragment extends Fragment{
      */
     private void onVenueRowClick(Venue venue) {
         if(venue == null) return;
-
-        String id = venue.getId();
-        String name = venue.getName();
-        Photos photos = venue.getPhotos();
-
         Intent intent = new Intent(getActivity(), VenuePhotoActivity.class);
-        intent.putExtra("name", name);
+        intent.putExtra(VenuePhotoActivity.VENUE_NAME, venue.getName());
+        intent.putExtra(VenuePhotoFragment.VENUE_ID, venue.getId());
         startActivity(intent);
     }
 

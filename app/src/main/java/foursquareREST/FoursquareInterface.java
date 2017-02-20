@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * Created by ASHL7 on 2/16/2017.
+ * Created by ASHL7 on 2/17/2017.
  * Defining the end points using Retrofit annotations
  */
 public interface FoursquareInterface {
@@ -29,4 +29,6 @@ public interface FoursquareInterface {
                                              @Query("limit") String limit,
                                              @Query("venuePhotos") String count,
                                              @Query("v") String date);
+
+
 }

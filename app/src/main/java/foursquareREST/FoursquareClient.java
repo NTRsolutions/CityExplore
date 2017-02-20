@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ASHL7 on 2/16/2017.
+ * Created by ASHL7 on 2/17/2017.
  * Retrofit Builder class to send network requests to Foursquare API
  */
 public class FoursquareClient {

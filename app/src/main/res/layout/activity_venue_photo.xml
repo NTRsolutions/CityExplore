@@ -12,14 +12,17 @@
     <TextView
         android:id="@+id/photoname_textview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:textSize="18dp" />
 
     <fragment
         android:id="@+id/venue_photo_fragment"
+        android:layout_below="@id/photoname_textview"
         android:name="com.ashl7developer.cityexplore.VenuePhotoFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         tools:layout="@layout/fragment_venue_photo" />
 
 </RelativeLayout>

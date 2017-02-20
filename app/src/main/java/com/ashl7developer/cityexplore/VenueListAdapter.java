@@ -18,7 +18,6 @@ import JSONmodel.Venue;
 /**
  * Created by ASHL7 on 2/17/2017.
  * Adapter to populate list of venues on the listview object
- * TODO: Use ViewHolder pattern or do it with Recycler view
  */
 public class VenueListAdapter extends ArrayAdapter<Venue> {
 
@@ -118,8 +117,7 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
     }
 
 
-
-    // TODO
+    //TODO: Use ViewHolder pattern or do it with Recycler view
     private static class ViewHolder{
 
     }
