@@ -134,7 +134,7 @@ public class VenueListFragment extends Fragment{
      * @return  void
      */
     private void showVenuesOnListview(final List<Venue> venues) {
-        
+
         if(venues == null || venues.isEmpty()) return;
         // Get the listview
         View view = getView();

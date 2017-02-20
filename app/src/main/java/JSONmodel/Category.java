@@ -2,6 +2,8 @@ package JSONmodel;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ASHL7 on 2/16/2017.
  */
@@ -28,4 +30,12 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static String categoryListtoString(List<Category> categories) {
+        StringBuffer sb = new StringBuffer();
+        for(Category category: categories) sb.append(category.getName() + ", ");
+        sb.delete(sb.length()-2, sb.length());
+        return sb.toString();
+    }
+
 }
