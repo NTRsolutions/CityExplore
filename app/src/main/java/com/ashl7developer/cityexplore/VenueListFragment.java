@@ -1,6 +1,9 @@
 package com.ashl7developer.cityexplore;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -48,12 +51,18 @@ public class VenueListFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_venue_list, container, false);
+        View view;
+        if (isNetworkAvailable()) {
+            view = inflater.inflate(R.layout.fragment_venue_list, container, false);
             Intent intent = getActivity().getIntent();
             cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
             getVenuesFromFoursquare(cityName, null, 50, FoursquareClient.API_DATE, 1);
-
+        }
+        else {
+            view = inflater.inflate(R.layout.no_network_layout, container, false);
+        }
         return view;
     }
 
@@ -219,6 +228,18 @@ public class VenueListFragment extends Fragment{
                         50, FoursquareClient.API_DATE, 1);
             }
         });
+    }
+
+
+    /**
+     * Check if there is internet connection
+     * @return  boolean
+     */
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
