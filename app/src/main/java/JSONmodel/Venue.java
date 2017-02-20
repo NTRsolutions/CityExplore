@@ -27,7 +27,7 @@ public class Venue {
     private String url;
 
     @SerializedName("photos")
-    private Photos photos = null;
+    private Thumbnail photos = null;
 
     private boolean bookmarked;
 
@@ -72,11 +72,11 @@ public class Venue {
         this.url = url;
     }
 
-    public Photos getPhotos() {
+    public Thumbnail getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Photos photos) {
+    public void setPhotos(Thumbnail photos) {
         this.photos = photos;
     }
 

@@ -1,8 +1,10 @@
 package foursquareREST;
 
 import JSONmodel.CityResponse;
+import JSONmodel.PicturesResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -29,6 +31,12 @@ public interface FoursquareInterface {
                                              @Query("limit") String limit,
                                              @Query("venuePhotos") String count,
                                              @Query("v") String date);
+
+    // Get photos given a venue ID
+    @GET("venues/{venue_id}/photos")
+    Call<PicturesResponse> getPictures(@Path("venue_id") String venue_id,
+                                       @Query("limit") String limit,
+                                       @Query("v") String date);
 
 
 }
