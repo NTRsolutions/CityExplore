@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName;
 public class PhotosBody {
 
     @SerializedName("response")
-    private PhotosResponse response;
+    private Response response;
 
-    public PhotosResponse getResponse() {
+    public Response getResponse() {
         return response;
     }
 
-    public void setResponse(PhotosResponse response) {
+    public void setResponse(Response response) {
         this.response = response;
     }
 }

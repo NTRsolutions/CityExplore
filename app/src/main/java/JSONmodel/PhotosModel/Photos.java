@@ -13,7 +13,7 @@ public class Photos {
     private Integer count;
 
     @SerializedName("items")
-    private List<PhotosPhotoItem> items;
+    private List<PhotoItem> items;
 
     public int getCount() {
         return count;
@@ -23,11 +23,11 @@ public class Photos {
         this.count = count;
     }
 
-    public List<PhotosPhotoItem> getItems() {
+    public List<PhotoItem> getItems() {
         return items;
     }
 
-    public void setItems(List<PhotosPhotoItem> items) {
+    public void setItems(List<PhotoItem> items) {
         this.items = items;
     }
 }

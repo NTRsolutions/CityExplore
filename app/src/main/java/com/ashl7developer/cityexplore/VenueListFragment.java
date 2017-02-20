@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
-import JSONmodel.ExploreModel.ExploreResponse;
+import JSONmodel.ExploreModel.ExploreBody;
 import JSONmodel.ExploreModel.Venue;
 import JSONmodel.ExploreModel.Item;
 import foursquareREST.FoursquareClient;
@@ -79,7 +79,7 @@ public class VenueListFragment extends Fragment{
     private void getVenuesFromFoursquare(String city, String category, int limit, int numPhotos,
                                          String date) {
 
-        Call<ExploreResponse> call;
+        Call<ExploreBody> call;
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
 
@@ -101,11 +101,11 @@ public class VenueListFragment extends Fragment{
                     date);
         }
 
-        call.enqueue(new Callback<ExploreResponse>() {
+        call.enqueue(new Callback<ExploreBody>() {
             private List<Venue> venues = null;
 
             @Override
-            public void onResponse(Call<ExploreResponse> call, Response<ExploreResponse> response) {
+            public void onResponse(Call<ExploreBody> call, Response<ExploreBody> response) {
                 if(response.isSuccessful()) {
                     Log.d(TAG, "API call was successful. ");
                     List<Item> items = response.body().getResponse().getGroups().get(0).getItems();
@@ -118,7 +118,7 @@ public class VenueListFragment extends Fragment{
             }
 
             @Override
-            public void onFailure(Call<ExploreResponse> call, Throwable t) {
+            public void onFailure(Call<ExploreBody> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
                 showVenuesOnListview(venues);

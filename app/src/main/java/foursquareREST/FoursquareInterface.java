@@ -1,6 +1,6 @@
 package foursquareREST;
 
-import JSONmodel.ExploreModel.ExploreResponse;
+import JSONmodel.ExploreModel.ExploreBody;
 import JSONmodel.PhotosModel.PhotosBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,22 +15,22 @@ public interface FoursquareInterface {
 
     // Get venues
     @GET("venues/explore")
-    Call<ExploreResponse> getVenues(@Query("client_id") String client_id,
-                                    @Query("client_secret") String client_secret,
-                                    @Query("near") String city,
-                                    @Query("limit") String limit,
-                                    @Query("venuePhotos") String count,
-                                    @Query("v") String date);
+    Call<ExploreBody> getVenues(@Query("client_id") String client_id,
+                                @Query("client_secret") String client_secret,
+                                @Query("near") String city,
+                                @Query("limit") String limit,
+                                @Query("venuePhotos") String count,
+                                @Query("v") String date);
 
     // Get venues given the category
     @GET("venues/explore")
-    Call<ExploreResponse> getVenuesWithCategory(@Query("client_id") String clinet_id,
-                                                @Query("client_secret") String client_secret,
-                                                @Query("near") String city,
-                                                @Query("section") String category,
-                                                @Query("limit") String limit,
-                                                @Query("venuePhotos") String count,
-                                                @Query("v") String date);
+    Call<ExploreBody> getVenuesWithCategory(@Query("client_id") String clinet_id,
+                                            @Query("client_secret") String client_secret,
+                                            @Query("near") String city,
+                                            @Query("section") String category,
+                                            @Query("limit") String limit,
+                                            @Query("venuePhotos") String count,
+                                            @Query("v") String date);
 
     // Get photos given a venue ID
     @GET("venues/{venue_id}/photos")

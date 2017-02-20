@@ -6,7 +6,7 @@ package JSONmodel.PhotosModel;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class PhotosPhotoItem {
+public class PhotoItem {
 
     @SerializedName("id")
     private String id;

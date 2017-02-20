@@ -11,16 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
-import JSONmodel.ExploreModel.PhotoItem;
-import JSONmodel.PhotosModel.Photos;
 import JSONmodel.PhotosModel.PhotosBody;
-import JSONmodel.PhotosModel.PhotosPhotoItem;
-import JSONmodel.PhotosModel.PhotosResponse;
+import JSONmodel.PhotosModel.PhotoItem;
 import foursquareREST.FoursquareClient;
 import foursquareREST.FoursquareInterface;
 import retrofit2.Call;
@@ -80,22 +74,13 @@ public class VenuePhotoFragment extends Fragment {
 
         call.enqueue(new Callback<PhotosBody>() {
 
-            List<PhotosPhotoItem> items;
+            List<PhotoItem> items;
             @Override
             public void onResponse(Call<PhotosBody> call, Response<PhotosBody> response) {
                 if(response.isSuccessful()) {
-                    Log.d(TAG, "API call for pictures was successful. ");
-
-                    PhotosBody photosBody = response.body();
-                    PhotosResponse photosResponse = photosBody.getResponse();
-                    if(photosResponse == null)
-                        Log.d(TAG, "photosResponse is null");
-                    Photos photos = photosResponse.getPhotos();
-                    if(photos == null)
-                       Log.d(TAG, "photos is null");
-                    items = photos.getItems();
-                    Log.d(TAG, "Got " + response.body().getResponse().getPhotos().getCount() + " Photos!");
-
+                    Log.d(TAG, "API call for pictures was successful. Got " +
+                            response.body().getResponse().getPhotos().getCount() + " pictures");
+                    items = response.body().getResponse().getPhotos().getItems();
                 }
                 else {
                     Log.d(TAG, "API call for pictures was not successful. Error: " + response.errorBody());
@@ -112,8 +97,12 @@ public class VenuePhotoFragment extends Fragment {
         });
     }
 
-
-    private void showPicturesOnGrid(List<PhotosPhotoItem> photos) {
+    /**
+     * Display the images received from api on grid
+     * @param photos List of photos
+     * @return  void
+     */
+    private void showPicturesOnGrid(List<PhotoItem> photos) {
         View view = getView();
         img = (ImageView) view.findViewById(R.id.my_imageview);
         String url = photos.get(0).getURLforOriginal();
@@ -125,7 +114,6 @@ public class VenuePhotoFragment extends Fragment {
                 .placeholder(R.drawable.unknown_image) // what to show if no img received
                 .error(R.drawable.error_img)           // what to show if error occurd
                 .into(img);
-
     }
 
 
@@ -139,7 +127,5 @@ public class VenuePhotoFragment extends Fragment {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
-
 
 }
