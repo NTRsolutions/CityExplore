@@ -1,4 +1,4 @@
-package JSONmodel;
+package JSONmodel.PhotosModel;
 
 
 import com.google.gson.annotations.SerializedName;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by ASHL7 on 2/19/2017.
  */
 
-public class PicturesResponse {
+public class PhotosResponse {
 
     @SerializedName("photos")
     private Photos photos;

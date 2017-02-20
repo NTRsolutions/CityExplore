@@ -1,4 +1,4 @@
-package JSONmodel;
+package JSONmodel.ExploreModel;
 
 import android.content.res.Resources;
 

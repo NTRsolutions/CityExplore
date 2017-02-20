@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import JSONmodel.Category;
-import JSONmodel.Venue;
+import JSONmodel.ExploreModel.Category;
+import JSONmodel.ExploreModel.Venue;
 
 /**
  * Created by ASHL7 on 2/17/2017.

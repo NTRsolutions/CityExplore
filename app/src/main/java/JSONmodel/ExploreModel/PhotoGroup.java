@@ -1,4 +1,4 @@
-package JSONmodel;
+package JSONmodel.ExploreModel;
 
 import com.google.gson.annotations.SerializedName;
 

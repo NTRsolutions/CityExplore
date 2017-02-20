@@ -1,4 +1,4 @@
-package JSONmodel;
+package JSONmodel.PhotosModel;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,10 +10,10 @@ import java.util.List;
 public class Photos {
 
     @SerializedName("count")
-    private int count;
+    private Integer count;
 
     @SerializedName("items")
-    private List<PhotoItem> items = null;
+    private List<PhotosPhotoItem> items;
 
     public int getCount() {
         return count;
@@ -23,11 +23,11 @@ public class Photos {
         this.count = count;
     }
 
-    public List<PhotoItem> getItems() {
+    public List<PhotosPhotoItem> getItems() {
         return items;
     }
 
-    public void setItems(List<PhotoItem> items) {
+    public void setItems(List<PhotosPhotoItem> items) {
         this.items = items;
     }
 }

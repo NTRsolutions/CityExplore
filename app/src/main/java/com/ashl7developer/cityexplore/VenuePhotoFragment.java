@@ -2,7 +2,6 @@ package com.ashl7developer.cityexplore;
 
 
 import android.content.Context;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,17 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import JSONmodel.CityResponse;
-import JSONmodel.Item;
-import JSONmodel.PhotoItem;
-import JSONmodel.PicturesResponse;
-import JSONmodel.Venue;
+import JSONmodel.ExploreModel.PhotoItem;
+import JSONmodel.PhotosModel.Photos;
+import JSONmodel.PhotosModel.PhotosBody;
+import JSONmodel.PhotosModel.PhotosPhotoItem;
+import JSONmodel.PhotosModel.PhotosResponse;
 import foursquareREST.FoursquareClient;
 import foursquareREST.FoursquareInterface;
 import retrofit2.Call;
@@ -32,14 +30,14 @@ import retrofit2.Response;
 
 /**
  * Created by ASHL7 on 2/19/2017.
- * Fragment to show a grid of pictures for a venue
+ * Fragment to dsiplay a grid of 50 pictures for a venue
  */
 public class VenuePhotoFragment extends Fragment {
 
     public static final String VENUE_ID = "0";
     private static final String TAG = VenuePhotoFragment.class.getName();
     private String venueId;
-    ImageView img;
+    private ImageView img;
 
     public VenuePhotoFragment() {
         // Required empty public constructor
@@ -54,7 +52,7 @@ public class VenuePhotoFragment extends Fragment {
         if(isNetworkAvailable()) {
             view = inflater.inflate(R.layout.fragment_venue_photo, container, false);
             venueId = getActivity().getIntent().getStringExtra(VENUE_ID);
-            getVenuesFromFoursquare(venueId, 50, FoursquareClient.API_DATE);
+            getPhotosFromFoursquare(venueId, 50, FoursquareClient.API_DATE);
         }
         else {
             view = inflater.inflate(R.layout.no_network_layout, container, false);
@@ -64,27 +62,40 @@ public class VenuePhotoFragment extends Fragment {
 
 
     /**
-     * Call to Foursqaure API get a list of all the venues
+     * Call to Foursqaure API get pictures for a venue
      *
      * @param  venueId  The target city
      * @param  limit  Max number of returned result
      * @param  date  Number of photos to return
      */
-    private void getVenuesFromFoursquare(String venueId, int limit, String date) {
+    private void getPhotosFromFoursquare(String venueId, int limit, String date) {
 
-        Call<PicturesResponse> call;
+        Log.d(TAG, "Getting pictures for venue ID: " + venueId);
+
+        Call<PhotosBody> call;
         FoursquareInterface apiService =
                 FoursquareClient.getClient().create(FoursquareInterface.class);
-        call = apiService.getPictures(venueId, Integer.toString(limit), date);
+        call = apiService.getPictures(venueId, FoursquareClient.CLIENT_ID,
+                FoursquareClient.CLIENT_SECRET, Integer.toString(limit), date);
 
-        call.enqueue(new Callback<PicturesResponse>() {
-            private List<PhotoItem> items = null;
+        call.enqueue(new Callback<PhotosBody>() {
 
+            List<PhotosPhotoItem> items;
             @Override
-            public void onResponse(Call<PicturesResponse> call, Response<PicturesResponse> response) {
+            public void onResponse(Call<PhotosBody> call, Response<PhotosBody> response) {
                 if(response.isSuccessful()) {
                     Log.d(TAG, "API call for pictures was successful. ");
-                    items = response.body().getPhotos().getItems();
+
+                    PhotosBody photosBody = response.body();
+                    PhotosResponse photosResponse = photosBody.getResponse();
+                    if(photosResponse == null)
+                        Log.d(TAG, "photosResponse is null");
+                    Photos photos = photosResponse.getPhotos();
+                    if(photos == null)
+                       Log.d(TAG, "photos is null");
+                    items = photos.getItems();
+                    Log.d(TAG, "Got " + response.body().getResponse().getPhotos().getCount() + " Photos!");
+
                 }
                 else {
                     Log.d(TAG, "API call for pictures was not successful. Error: " + response.errorBody());
@@ -93,7 +104,7 @@ public class VenuePhotoFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<PicturesResponse> call, Throwable t) {
+            public void onFailure(Call<PhotosBody> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
                 showPicturesOnGrid(items);
@@ -102,16 +113,21 @@ public class VenuePhotoFragment extends Fragment {
     }
 
 
-    private void showPicturesOnGrid(List<PhotoItem> photos) {
+    private void showPicturesOnGrid(List<PhotosPhotoItem> photos) {
         View view = getView();
-        img = (ImageView) view.findViewById(R.id.imageview);
+        img = (ImageView) view.findViewById(R.id.my_imageview);
         String url = photos.get(0).getURLforOriginal();
+        Log.e(TAG, "URL: " + url);
+
+        img.setImageResource(R.drawable.unknown_image);
         Picasso.with(getActivity())
                 .load(url)
                 .placeholder(R.drawable.unknown_image) // what to show if no img received
                 .error(R.drawable.error_img)           // what to show if error occurd
                 .into(img);
+
     }
+
 
     /**
      * Check if there is internet connection

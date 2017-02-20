@@ -1,8 +1,10 @@
-package JSONmodel;
+package JSONmodel.ExploreModel;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import JSONmodel.ExploreModel.Group;
 
 /**
  * Created by ASHL7 on 2/16/2017.
