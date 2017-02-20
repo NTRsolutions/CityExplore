@@ -9,7 +9,7 @@
         <item>Los Angeles, CA</item>
         <item>Miami, FL</item>
         <item>San Diego, CA</item>
-        <item>Irvine, CA</item>
+        <item>New York City, NY</item>
         <item>Chicago, IL</item>
         <item>Austin, TX</item>
         <item>Boston, MA</item>
@@ -21,7 +21,6 @@
     <string name="category_outdoors_text">Outdoors</string>
     <string name="category_arts_text">Arts</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 

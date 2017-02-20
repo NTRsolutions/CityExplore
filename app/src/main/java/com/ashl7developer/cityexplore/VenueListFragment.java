@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import JSONmodel.CityResponse;
-import JSONmodel.PhotoGroup;
-import JSONmodel.PhotoItem;
 import JSONmodel.Photos;
 import JSONmodel.Venue;
 import JSONmodel.Item;
@@ -32,7 +30,7 @@ import retrofit2.Response;
 
 
 /**
- * Created by ASHL7 on 2/15/2017.
+ * Created by ASHL7 on 2/16/2017.
  * Fragment to show the list of venues for a city
  */
 public class VenueListFragment extends Fragment{
@@ -58,7 +56,7 @@ public class VenueListFragment extends Fragment{
             view = inflater.inflate(R.layout.fragment_venue_list, container, false);
             Intent intent = getActivity().getIntent();
             cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
-            getVenuesFromFoursquare(cityName, null, 50, FoursquareClient.API_DATE, 1);
+            getVenuesFromFoursquare(cityName, null, 50, 1, FoursquareClient.API_DATE);
         }
         else {
             view = inflater.inflate(R.layout.no_network_layout, container, false);
@@ -80,13 +78,11 @@ public class VenueListFragment extends Fragment{
      * @param  city  The target city
      * @param  category  The target category
      * @param  limit  Max number of returned result
-     * @param  date  The date of the api
-     * @param  numPhotos  Number of photos to return
-     * @return List<Venue> List of the venues
-     * TODO: return a list<venue>
+     * @param  numPhotos  The date of the api
+     * @param  date  Number of photos to return
      */
-    private void getVenuesFromFoursquare(String city, String category, int limit,
-                                         String date, int numPhotos) {
+    private void getVenuesFromFoursquare(String city, String category, int limit, int numPhotos,
+                                         String date) {
 
         Call<CityResponse> call;
         FoursquareInterface apiService =
@@ -205,7 +201,7 @@ public class VenueListFragment extends Fragment{
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         foodTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE, 1);
+                        50, 1, FoursquareClient.API_DATE);
             }
         });
 
@@ -215,7 +211,7 @@ public class VenueListFragment extends Fragment{
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         outdoorsTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE, 1);
+                        50, 1, FoursquareClient.API_DATE);
             }
         });
 
@@ -225,7 +221,7 @@ public class VenueListFragment extends Fragment{
             public void onClick(View v) {
                 getVenuesFromFoursquare(cityName,
                         artsTextView.getText().toString(),
-                        50, FoursquareClient.API_DATE, 1);
+                        50, 1, FoursquareClient.API_DATE);
             }
         });
     }

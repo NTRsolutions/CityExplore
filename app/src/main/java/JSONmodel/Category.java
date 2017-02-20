@@ -31,7 +31,9 @@ public class Category {
         this.name = name;
     }
 
-    public static String categoryListtoString(List<Category> categories) {
+
+    // converts a list of Categories to a string
+    public static String categoryListToString(List<Category> categories) {
         StringBuffer sb = new StringBuffer();
         for(Category category: categories) sb.append(category.getName() + ", ");
         sb.delete(sb.length()-2, sb.length());
