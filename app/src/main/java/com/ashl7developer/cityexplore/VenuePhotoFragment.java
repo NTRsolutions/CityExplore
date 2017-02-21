@@ -65,7 +65,6 @@ public class VenuePhotoFragment extends Fragment {
      * @param  date  Number of photos to return
      */
     private void getPhotosFromFoursquare(String venueId, int limit, String date) {
-
         Log.d(TAG, "Getting pictures for venue ID: " + venueId);
 
         Call<PhotosBody> call;
@@ -99,6 +98,7 @@ public class VenuePhotoFragment extends Fragment {
         });
     }
 
+
     /**
      * Display the images received from api on grid
      * @param photos List of photos
@@ -106,11 +106,13 @@ public class VenuePhotoFragment extends Fragment {
      */
     private void showPicturesOnGrid(List<PhotoItem> photos) {
         View view = getView();
-        gridView = (GridView) view.findViewById(R.id.gridView);
+        if(view != null && photos != null) {
+            gridView = (GridView) view.findViewById(R.id.gridView);
 
-        PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(getActivity(),
-                R.layout.item_grid_layout, photos);
-        gridView.setAdapter(photoGridAdapter);
+            PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(getActivity(),
+                    R.layout.item_grid_layout, photos);
+            gridView.setAdapter(photoGridAdapter);
+        }
     }
 
 

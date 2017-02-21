@@ -16,6 +16,8 @@ import JSONmodel.PhotosModel.PhotoItem;
 
 /**
  * Created by ASHL7 on 2/20/2017.
+ * Adapter to load photos on the grid
+ * //TODO: implement View Holder Pattern
  */
 public class PhotoGridAdapter extends ArrayAdapter<PhotoItem> {
 
@@ -45,11 +47,13 @@ public class PhotoGridAdapter extends ArrayAdapter<PhotoItem> {
         ImageView imageView = (ImageView) convertView.findViewById(R.id.venue_imageview);
         PhotoItem photoItem = photos.get(position);
         String url = photoItem.getURLforGrid();
+
         Picasso.with(this.context)
                 .load(url)
                 .placeholder(R.drawable.unknown_image) // what to show if no img received
                 .error(R.drawable.error_img)           // what to show if error occurd
                 .into(imageView);
+
         return convertView;
     }
 }

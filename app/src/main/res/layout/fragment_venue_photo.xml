@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.ashl7developer.cityexplore.VenuePhotoFragment">
 
-
     <GridView
         android:id="@+id/gridView"
         android:layout_width="fill_parent"
