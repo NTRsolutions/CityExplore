@@ -3,15 +3,26 @@ package com.ashl7developer.cityexplore;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import database.BookmarkedVenueDatabase;
+
 /**
  * Created by ASHL7 on 2/19/2017.
  * Activity to hold VenuePhotoFragment
  */
 public class VenuePhotoActivity extends AppCompatActivity {
 
+    public static final String VENUE_ID = "0";
     public static final String VENUE_NAME = "1";
+
+    private BookmarkedVenueDatabase database;
+
     private TextView cityNameTextView;
+    private Button bookmarkButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +30,30 @@ public class VenuePhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_venue_photo);
 
         Intent intent = getIntent();
-        String cityName = intent.getStringExtra(VENUE_NAME);
+        final String venueName = intent.getStringExtra(VENUE_NAME);
+        final String venueId = intent.getStringExtra(VENUE_ID);
+
+        database = new BookmarkedVenueDatabase(this);
+        database.open();
 
         cityNameTextView = (TextView) findViewById(R.id.photoname_textview);
-        cityNameTextView.setText("Pictures of " + cityName);
+        cityNameTextView.setText("Pictures of " + venueName);
+
+        bookmarkButton = (Button) findViewById(R.id.bookmark_button);
+        // Setting Buttons listeners
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database.insertVenue(venueId, venueName);
+            }
+        });
     }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        database.close();
+    }
+
 }

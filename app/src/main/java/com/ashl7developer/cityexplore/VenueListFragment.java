@@ -173,7 +173,7 @@ public class VenueListFragment extends Fragment{
         if(venue == null) return;
         Intent intent = new Intent(getActivity(), VenuePhotoActivity.class);
         intent.putExtra(VenuePhotoActivity.VENUE_NAME, venue.getName());
-        intent.putExtra(VenuePhotoFragment.VENUE_ID, venue.getId());
+        intent.putExtra(VenuePhotoActivity.VENUE_ID, venue.getId());
         startActivity(intent);
     }
 

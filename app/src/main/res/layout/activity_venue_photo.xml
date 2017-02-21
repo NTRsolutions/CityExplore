@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:gravity="center_horizontal" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +23,7 @@
         android:text="Bookmark It"
         android:textSize="12dp"
         android:layout_below="@id/photoname_textview"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp" />
 
     <fragment
         android:id="@+id/venue_photo_fragment"
@@ -30,6 +31,7 @@
         android:name="com.ashl7developer.cityexplore.VenuePhotoFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        tools:layout="@layout/fragment_venue_photo" />
+        tools:layout="@layout/fragment_venue_photo"
+        />
 
 </RelativeLayout>

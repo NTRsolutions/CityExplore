@@ -11,8 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
-import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import JSONmodel.PhotosModel.PhotosBody;
 import JSONmodel.PhotosModel.PhotoItem;
@@ -29,7 +28,6 @@ import retrofit2.Response;
  */
 public class VenuePhotoFragment extends Fragment {
 
-    public static final String VENUE_ID = "0";
     private static final String TAG = VenuePhotoFragment.class.getName();
     private String venueId;
     private GridView gridView;
@@ -47,7 +45,7 @@ public class VenuePhotoFragment extends Fragment {
         View view;
         if(isNetworkAvailable()) {
             view = inflater.inflate(R.layout.fragment_venue_photo, container, false);
-            venueId = getActivity().getIntent().getStringExtra(VENUE_ID);
+            venueId = getActivity().getIntent().getStringExtra(VenuePhotoActivity.VENUE_ID);
             getPhotosFromFoursquare(venueId, 50, FoursquareClient.API_DATE);
         }
         else {
