@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashSet;
+
 import database.BookmarkedVenueDatabase;
 
 /**
@@ -35,16 +37,20 @@ public class VenuePhotoActivity extends AppCompatActivity {
 
         database = new BookmarkedVenueDatabase(this);
         database.open();
+        HashSet<String> bookmarkedSet = database.getBookmarkedIDs();
 
         cityNameTextView = (TextView) findViewById(R.id.photoname_textview);
         cityNameTextView.setText("Pictures of " + venueName);
 
         bookmarkButton = (Button) findViewById(R.id.bookmark_button);
-        // Setting Buttons listeners
+        if(bookmarkedSet.contains(venueId)) {
+            bookmarkButton.setEnabled(false);
+        }
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 database.insertVenue(venueId, venueName);
+                bookmarkButton.setEnabled(false);
             }
         });
     }
