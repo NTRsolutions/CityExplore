@@ -21,7 +21,11 @@
     <string name="category_outdoors_text">Outdoors</string>
     <string name="category_arts_text">Arts</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="slide1_title">Welcome to CityExplore</string>
+    <string name="slide1_desc">Developed by Arash Nase</string>
+    <string name="slide2_title">Instructions for Danny Roa</string>
+    <string name="slide2_desc">Select a city\nSelect a venue\nEnjoy the pictures\nTry to crash it! :-)\n</string>
+    <string name="get_started_button">Get Started</string>
 
 
 </resources>

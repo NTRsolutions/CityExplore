@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_inactive">#90b8e4</color>
+    <!-- dots active colors -->
+    <color name="dot_active">#e9071261</color>
 </resources>

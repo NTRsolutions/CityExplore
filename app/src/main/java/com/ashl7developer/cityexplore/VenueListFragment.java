@@ -75,6 +75,7 @@ public class VenueListFragment extends Fragment{
         showVenuesOnListview(venues);
     }
 
+
     //TODO: cache the result of listview so when configuration changes, we don't make another call to API
     @Override
     public void onSaveInstanceState(Bundle outState) {
