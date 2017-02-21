@@ -26,6 +26,6 @@
     <string name="slide2_title">Instructions for Danny Roa</string>
     <string name="slide2_desc">Select a city\nSelect a venue\nEnjoy the pictures\nTry to crash it! :-)\n</string>
     <string name="get_started_button">Get Started</string>
-
+    <string name="password">com.ashl7developer.cityexpore.password</string>
 
 </resources>

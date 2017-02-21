@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * Created by ASHL7 on 2/15/2017.
+ * Created by ASHL7 on 2/16/2017.
  * Class representing a venue
  */
 public class Venue {

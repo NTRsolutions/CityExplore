@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 
 /**
- * Created by ASHL7 on 2/16/2017.
+ * Created by ASHL7 on 2/17/2017.
  * Fragment to show the list of venues for a city
  */
 public class VenueListFragment extends Fragment{
@@ -72,7 +72,8 @@ public class VenueListFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        showVenuesOnListview(venues);
+        database.open();
+        showVenuesOnListview();
     }
 
 
@@ -129,14 +130,14 @@ public class VenueListFragment extends Fragment{
                 else {
                     Log.d(TAG, "API call was not successful. Error: " + response.errorBody());
                 }
-                showVenuesOnListview(venues);
+                showVenuesOnListview();
             }
 
             @Override
             public void onFailure(Call<ExploreBody> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-                showVenuesOnListview(venues);
+                showVenuesOnListview();
             }
         });
     }
@@ -145,10 +146,9 @@ public class VenueListFragment extends Fragment{
     /**
      * Populates fragment's listview with the data received from foursquare client api call
      *
-     * @param  venues  The list of items which contains venues
      * @return  void
      */
-    private void showVenuesOnListview(final List<Venue> venues) {
+    private void showVenuesOnListview() {
         if(venues == null || venues.isEmpty()) return;
 
         // Get the listview

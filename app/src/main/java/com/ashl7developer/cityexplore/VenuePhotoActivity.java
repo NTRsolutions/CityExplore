@@ -57,6 +57,13 @@ public class VenuePhotoActivity extends AppCompatActivity {
 
 
     @Override
+    public void onStart() {
+        super.onStart();
+        database.open();
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         database.close();

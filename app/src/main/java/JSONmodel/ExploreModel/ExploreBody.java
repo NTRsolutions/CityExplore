@@ -4,7 +4,7 @@ package JSONmodel.ExploreModel;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by ASHL7 on 2/15/2017.
+ * Created by ASHL7 on 2/16/2017.
  * Class representing a call to Foursquare API
  */
 public class ExploreBody {
