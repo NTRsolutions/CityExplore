@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.List;
 import JSONmodel.ExploreModel.Category;
 import JSONmodel.ExploreModel.Venue;
+import database.BookmarkedVenueDatabase;
 
 /**
  * Created by ASHL7 on 2/17/2017.
@@ -22,17 +24,23 @@ import JSONmodel.ExploreModel.Venue;
 public class VenueListAdapter extends ArrayAdapter<Venue> {
 
     private static final String TAG = VenueListAdapter.class.getName();
+
     List<Venue> venueList;
+    HashSet<String> bookmarkedSet;
+
     // row layout types
     private static final int REGULAR_ITEM_TYPE = 0;
     private static final int CATEGORY_ITEM_TYPE = 1;
+
     private Context context;
 
 
-    public VenueListAdapter(Context context, int resource, List<Venue> objects) {
+    public VenueListAdapter(Context context, int resource,
+                            List<Venue> objects, HashSet<String> bookmarked) {
         super(context, resource, objects);
         venueList = objects;
         this.context = context;
+        this.bookmarkedSet = bookmarked;
     }
 
 
@@ -62,7 +70,9 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         int layoutType = getItemViewType(position);
+
         switch (layoutType) {
+
             case REGULAR_ITEM_TYPE:
                 if (convertView == null) {
                     convertView = LayoutInflater.from(getContext()).inflate(
@@ -71,17 +81,25 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
 
                 if (venueList == null || venueList.isEmpty())
                     return convertView;
+
                 Venue venue = getItem(position);
 
                 TextView nameTextView = (TextView) convertView.findViewById(R.id.name_textview);
                 TextView locationTextView = (TextView) convertView.findViewById(R.id.location_textview);
                 TextView categoryTextView = (TextView) convertView.findViewById(R.id.category_textview);
+                TextView bookmarkedTextView = (TextView) convertView.findViewById(R.id.bookmark_textview);
                 ImageView thumbnailImageView = (ImageView) convertView
                         .findViewById(R.id.thumbnail_imageview);
 
                 nameTextView.setText(venue.getName().toString());
                 locationTextView.setText(venue.getLocation().getAddress());
                 categoryTextView.setText(Category.categoryListToString(venue.getCategories()));
+                if(bookmarkedSet.contains(venue.getId())) {
+                    bookmarkedTextView.setText("Liked");
+                }
+                else {
+                    bookmarkedTextView.setText("");
+                }
 
                 // get image url and load it
                 // for venues, they don't come with any image (which is weird since I specifiy
@@ -106,6 +124,7 @@ public class VenueListAdapter extends ArrayAdapter<Venue> {
                             .error(R.drawable.error_img)           // what to show if error occurd
                             .into(thumbnailImageView);
                 }
+
                 return convertView;         // Return the completed view to render on screen
 
             case CATEGORY_ITEM_TYPE:

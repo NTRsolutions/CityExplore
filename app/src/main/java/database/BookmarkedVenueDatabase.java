@@ -77,7 +77,7 @@ public class BookmarkedVenueDatabase {
 
 
     // Get ALL bookmarked venue IDs
-    public HashSet<String> getAllBookmarkedI() {
+    public HashSet<String> getBookmarkedIDs() {
         HashSet<String> IDs = new HashSet<>();
         Cursor cursor = database.query(VenueDatabaseHelper.TABLE_VENUE,
                 allColumns, null, null, null, null, null);

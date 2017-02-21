@@ -36,7 +36,6 @@
         android:id="@+id/bookmark_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bookmark_text"
         android:textSize="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/name_textview"/>

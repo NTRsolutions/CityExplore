@@ -17,6 +17,7 @@ import java.util.List;
 import JSONmodel.ExploreModel.ExploreBody;
 import JSONmodel.ExploreModel.Venue;
 import JSONmodel.ExploreModel.Item;
+import database.BookmarkedVenueDatabase;
 import foursquareREST.FoursquareClient;
 import foursquareREST.FoursquareInterface;
 import retrofit2.Call;
@@ -33,6 +34,7 @@ public class VenueListFragment extends Fragment{
     private static final String TAG = VenueListFragment.class.getName();
     private ListView venueListView;
     private String cityName;
+    private BookmarkedVenueDatabase database;
 
 
     public VenueListFragment() {
@@ -51,6 +53,13 @@ public class VenueListFragment extends Fragment{
             view = inflater.inflate(R.layout.fragment_venue_list, container, false);
             Intent intent = getActivity().getIntent();
             cityName = intent.getStringExtra(SelectCityFragment.EXTRA_CITY_NAME);
+
+            database = new BookmarkedVenueDatabase(getActivity());
+            database.open();
+            Log.d(TAG, "getting all IDs in database");
+            for(String id : database.getBookmarkedIDs())
+                Log.d(TAG, "In database " + id);
+
             getVenuesFromFoursquare(cityName, null, 50, 1, FoursquareClient.API_DATE);
         }
         else {
@@ -142,8 +151,8 @@ public class VenueListFragment extends Fragment{
             venueListView = (ListView) view.findViewById(R.id.venue_listview);
 
         // connecting the adapter to listview
-        final VenueListAdapter venueListAdapter =
-                new VenueListAdapter(getActivity(), R.layout.item_venue_list, venues);
+        final VenueListAdapter venueListAdapter = new VenueListAdapter(getActivity(),
+                R.layout.item_venue_list, venues, database.getBookmarkedIDs());
         venueListView.setAdapter(venueListAdapter);
 
         // Setting up listener for items that are clicked on the list
@@ -228,6 +237,13 @@ public class VenueListFragment extends Fragment{
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        database.close();
     }
 
 }
