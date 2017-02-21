@@ -5,9 +5,16 @@
     tools:context="com.ashl7developer.cityexplore.VenuePhotoFragment">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/my_imageview" />
+        android:columnWidth="300dp"
+        android:drawSelectorOnTop="true"
+        android:gravity="center"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="4dp"
+        android:horizontalSpacing="4dp"/>
 
 </LinearLayout>

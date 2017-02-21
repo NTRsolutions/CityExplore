@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -31,7 +32,8 @@ public class VenuePhotoFragment extends Fragment {
     public static final String VENUE_ID = "0";
     private static final String TAG = VenuePhotoFragment.class.getName();
     private String venueId;
-    private ImageView img;
+    private GridView gridView;
+
 
     public VenuePhotoFragment() {
         // Required empty public constructor
@@ -104,16 +106,11 @@ public class VenuePhotoFragment extends Fragment {
      */
     private void showPicturesOnGrid(List<PhotoItem> photos) {
         View view = getView();
-        img = (ImageView) view.findViewById(R.id.my_imageview);
-        String url = photos.get(0).getURLforOriginal();
-        Log.e(TAG, "URL: " + url);
+        gridView = (GridView) view.findViewById(R.id.gridView);
 
-        img.setImageResource(R.drawable.unknown_image);
-        Picasso.with(getActivity())
-                .load(url)
-                .placeholder(R.drawable.unknown_image) // what to show if no img received
-                .error(R.drawable.error_img)           // what to show if error occurd
-                .into(img);
+        PhotoGridAdapter photoGridAdapter = new PhotoGridAdapter(getActivity(),
+                R.layout.item_grid_layout, photos);
+        gridView.setAdapter(photoGridAdapter);
     }
 
 
