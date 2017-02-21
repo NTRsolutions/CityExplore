@@ -35,6 +35,7 @@ public class VenueListFragment extends Fragment{
     private ListView venueListView;
     private String cityName;
     private BookmarkedVenueDatabase database;
+    private List<Venue> venues;
 
 
     public VenueListFragment() {
@@ -56,9 +57,6 @@ public class VenueListFragment extends Fragment{
 
             database = new BookmarkedVenueDatabase(getActivity());
             database.open();
-            Log.d(TAG, "getting all IDs in database");
-            for(String id : database.getBookmarkedIDs())
-                Log.d(TAG, "In database " + id);
 
             getVenuesFromFoursquare(cityName, null, 50, 1, FoursquareClient.API_DATE);
         }
@@ -68,6 +66,14 @@ public class VenueListFragment extends Fragment{
         return view;
     }
 
+
+    // since after bookmarking the bookmark should show up, then we need to
+    // implement onStart so that when user goes back from grid to this fragment, list gets updated
+    @Override
+    public void onStart() {
+        super.onStart();
+        showVenuesOnListview(venues);
+    }
 
     //TODO: cache the result of listview so when configuration changes, we don't make another call to API
     @Override
@@ -111,7 +117,6 @@ public class VenueListFragment extends Fragment{
         }
 
         call.enqueue(new Callback<ExploreBody>() {
-            private List<Venue> venues = null;
 
             @Override
             public void onResponse(Call<ExploreBody> call, Response<ExploreBody> response) {
