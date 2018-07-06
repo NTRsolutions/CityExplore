@@ -23,9 +23,11 @@ public class SelectCityActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.password),
                 Context.MODE_PRIVATE);
         boolean isFirstTime = sharedPref.getBoolean(SelectCityActivity.IS_FIRST_TIME, true);
+        /*
         if(isFirstTime) {
             Intent intent = new Intent(this, WelcomeScreenActivity.class);
             startActivity(intent);
         }
+        */
     }
 }
